@@ -57,5 +57,10 @@ var Sudoku = (function() {
     }
   };
 
-  return Sudoku;
+  return {
+    Sudoku.GRID_SIZE,
+    Sudoku.getCell,
+    Sudoku.setCell,
+    Sudoku.noConflicts
+  };
 })();
