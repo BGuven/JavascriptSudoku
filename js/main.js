@@ -1,0 +1,2 @@
+SudokuSolver.init();
+SudokuUI.init();
