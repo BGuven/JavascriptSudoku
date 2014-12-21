@@ -1,4 +1,4 @@
-var SudokuUI = (function(sudoku){
+var SudokuUI = $.extend({}, Sudoku, (function(){
   "use strict"
 
   var SudokuUI = {
@@ -10,9 +10,9 @@ var SudokuUI = (function(sudoku){
     printGrid: function() {
       var res = "";
 
-      for (var i = 0; i < sudoku.GRID_SIZE; i++) {
-        for (var j = 0; j < sudoku.GRID_SIZE; j++) {
-          res += sudoku.getCell(i, j);
+      for (var i = 0; i < this.GRID_SIZE; i++) {
+        for (var j = 0; j < this.GRID_SIZE; j++) {
+          res += this.getCell(i, j);
         }
         res += "\n";
       }
@@ -25,13 +25,13 @@ var SudokuUI = (function(sudoku){
         "contenteditable": "true"
       });
 
-      for (var i = 0; i < sudoku.GRID_SIZE; i++) {
+      for (var i = 0; i < this.GRID_SIZE; i++) {
         var $row = $('<div />', {
           "class": "row"
         });
 
-        for (var j = 0; j < sudoku.GRID_SIZE; j++) {
-          $div.html(sudoku.getCell(i, j));
+        for (var j = 0; j < this.GRID_SIZE; j++) {
+          $div.html(this.getCell(i, j));
           $row.append($div.clone());
         };
 
@@ -51,12 +51,12 @@ var SudokuUI = (function(sudoku){
           });
         }
       }, function() {
-          $.each(sel, function() {
-            $(this).removeClass('hover');
-          });
+        $.each(sel, function() {
+          $(this).removeClass('hover');
+        });
       });
     }
   };
 
   return SudokuUI;
-})(Sudoku);
+})());

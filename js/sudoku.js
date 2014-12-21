@@ -17,40 +17,40 @@ var Sudoku = (function() {
     ],
 
     setCell: function(row, col, val){
-      this.grid[row][col] = val;
+      Sudoku.grid[row][col] = val;
     },
 
     getCell: function(row, col) {
-      return this.grid[row][col];
+      return Sudoku.grid[row][col];
     },
 
     noConflicts: function(row, col, num) {
-      return this.isRowOk(row, num) && this.isColOk(col, num) && this.isBoxOk(row, col, num);
+      return Sudoku._isRowOk(row, num) && Sudoku._isColOk(col, num) && Sudoku._isBoxOk(row, col, num);
     },
 
-    isRowOk: function(row, num) {
-      for (var col = 0; col < this.GRID_SIZE; col++)
-        if (this.grid[row][col] == num)
+    _isRowOk: function(row, num) {
+      for (var col = 0; col < Sudoku.GRID_SIZE; col++)
+        if (Sudoku.grid[row][col] == num)
           return false;
 
       return true;
     },
 
-    isColOk: function(col, num) {
-      for (var row = 0; row < this.GRID_SIZE; row++)
-        if (this.grid[row][col] == num)
+    _isColOk: function(col, num) {
+      for (var row = 0; row < Sudoku.GRID_SIZE; row++)
+        if (Sudoku.grid[row][col] == num)
           return false;
 
       return true;
     },
 
-    isBoxOk: function(row, col, num) {
+    _isBoxOk: function(row, col, num) {
       row = Math.floor(row / 3) * 3;
       col = Math.floor(col / 3) * 3;
 
       for (var r = 0; r < 3; r++)
         for (var c = 0; c < 3; c++)
-          if (this.grid[row + r][col + c] == num)
+          if (Sudoku.grid[row + r][col + c] == num)
             return false;
 
       return true;
@@ -58,9 +58,9 @@ var Sudoku = (function() {
   };
 
   return {
-    Sudoku.GRID_SIZE,
-    Sudoku.getCell,
-    Sudoku.setCell,
-    Sudoku.noConflicts
+    GRID_SIZE:   Sudoku.GRID_SIZE,
+    getCell:     Sudoku.getCell,
+    setCell:     Sudoku.setCell,
+    noConflicts: Sudoku.noConflicts
   };
 })();

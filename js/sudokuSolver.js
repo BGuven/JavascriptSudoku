@@ -1,4 +1,4 @@
-var SudokuSolver = (function(sudoku){
+var SudokuSolver = (function(Sudoku){
   "use strict"
 
   var SudokuSolver = {
@@ -7,20 +7,20 @@ var SudokuSolver = (function(sudoku){
 
     init: function(){
       // Generate a randomly filled grid to fill.
-      this.generateRandomGrid();
-      this.solveSudoku();
+      SudokuSolver._generateRandomGrid();
+      SudokuSolver._solveSudoku();
     },
 
-    generateRandomGrid: function() {
+    _generateRandomGrid: function() {
       var row, col, num = 0;
 
       for (var i = 0; i < 11; i++) {
-        row = this.getRandumIntegerInRange(0, sudoku.GRID_SIZE);
-        col = this.getRandumIntegerInRange(0, sudoku.GRID_SIZE);
-        num = this.getRandumIntegerInRange(1, sudoku.GRID_SIZE);
+        row = SudokuSolver.getRandumIntegerInRange(0, Sudoku.GRID_SIZE);
+        col = SudokuSolver.getRandumIntegerInRange(0, Sudoku.GRID_SIZE);
+        num = SudokuSolver.getRandumIntegerInRange(1, Sudoku.GRID_SIZE);
 
-        if (sudoku.noConflicts(row, col, num)) {
-          sudoku.setCell(row, col, num);
+        if (Sudoku.noConflicts(row, col, num)) {
+          Sudoku.setCell(row, col, num);
         }
       }
     },
@@ -29,12 +29,12 @@ var SudokuSolver = (function(sudoku){
       return lowerBound + Math.floor(Math.random() * upperBound);
     },
 
-    solveSudoku: function() {
-      if (++this.numberOfTries === this.MAX_BACKTRACK_LIMIT) {
+    _solveSudoku: function() {
+      if (++SudokuSolver.numberOfTries === SudokuSolver.MAX_BACKTRACK_LIMIT) {
         throw new MaxTryReachedError();
       }
 
-      var cell = this.findUnassignedLocation();
+      var cell = SudokuSolver._findUnassignedLocation();
       var row = cell[0];
       var col = cell[1];
 
@@ -44,17 +44,17 @@ var SudokuSolver = (function(sudoku){
         return true;
       }
 
-      for (var num = 1; num <= sudoku.GRID_SIZE; num++) {
+      for (var num = 1; num <= Sudoku.GRID_SIZE; num++) {
 
-        if (sudoku.noConflicts(row, col, num)) {
-          sudoku.setCell(row, col, num);
+        if (Sudoku.noConflicts(row, col, num)) {
+          Sudoku.setCell(row, col, num);
 
-          if (this.solveSudoku()) {
+          if (SudokuSolver._solveSudoku()) {
             return true;
           }
 
           // mark cell as empty (with 0)
-          sudoku.setCell(row, col, 0);
+          Sudoku.setCell(row, col, 0);
         }
       }
 
@@ -62,14 +62,16 @@ var SudokuSolver = (function(sudoku){
       return false;
     },
 
-    findUnassignedLocation: function() {
-      for (var row =0; row < sudoku.GRID_SIZE; row++)
-        for (var col =0; col < sudoku.GRID_SIZE; col++)
-          if (sudoku.getCell(row, col) == 0)
+    _findUnassignedLocation: function() {
+      for (var row = 0; row < Sudoku.GRID_SIZE; row++)
+        for (var col = 0; col < Sudoku.GRID_SIZE; col++)
+          if (Sudoku.getCell(row, col) == 0)
             return [row, col];
       return [-1, -1];
     },
   };
 
-  return SudokuSolver;
+  return {
+    init: SudokuSolver.init
+  };
 })(Sudoku);
